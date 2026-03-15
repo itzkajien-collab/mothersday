@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Happy Mother's Day</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#f4f4f4,#ffe5e5,#ffd6d6);
+height:100vh;
+overflow:hidden;
+}
+
+/* screens */
+
+.screen{
+position:absolute;
+width:100%;
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+transition:0.5s;
+}
+
+/* welcome */
+
+#welcome{
+cursor:pointer;
+text-align:center;
+color:white;
+font-size:30px;
+}
+
+/* pin screen */
+
+#passcode{
+display:none;
+}
+
+.pass-container{
+display:flex;
+width:750px;
+background:white;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+overflow:hidden;
+}
+
+/* left image */
+
+.left{
+width:50%;
+background:#ffe6f2;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.left img{
+max-width:90%;
+border-radius:15px;
+}
+
+/* right keypad */
+
+.right{
+width:50%;
+text-align:center;
+padding:20px;
+}
+
+.display{
+font-size:28px;
+letter-spacing:8px;
+margin:10px;
+}
+
+/* keypad */
+
+.keypad{
+display:grid;
+grid-template-columns:repeat(3,70px);
+gap:10px;
+justify-content:center;
+}
+
+.key{
+padding:15px;
+border:none;
+border-radius:10px;
+font-size:18px;
+background:#ff4da6;
+color:white;
+cursor:pointer;
+}
+
+.key:hover{
+background:#ff1a8c;
+}
+
+/* menu */
+
+#menu{
+display:none;
+text-align:center;
+}
+
+.gifts{
+display:flex;
+gap:30px;
+margin-top:20px;
+}
+
+.gift-box{
+width:120px;
+height:120px;
+background:#d62828;
+position:relative;
+border-radius:12px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:30px;
+color:white;
+transition:0.25s;
+box-shadow:0 6px 15px rgba(0,0,0,0.2);
+}
+
+/* lid */
+.lid{
+position:absolute;
+top:-15px;
+width:130px;
+height:25px;
+background:#e63946;
+border-radius:6px;
+left:-5px;
+transition:0.3s;
+}
+
+/* ribbons */
+.ribbon-vertical{
+position:absolute;
+width:18px;
+height:120px;
+background:#ffffff;
+left:50%;
+transform:translateX(-50%);
+}
+
+.ribbon-horizontal{
+position:absolute;
+height:18px;
+width:120px;
+background:#ffffff;
+top:45px;
+}
+
+.gift-box:hover{
+transform:translateY(-8px) scale(1.05);
+}
+
+img.photo{
+width:220px;
+height:220px;
+object-fit:cover;
+border-radius:15px;
+margin:10px;
+}
+
+/* envelope */
+
+/* envelope container */
+
+.envelope{
+width:260px;
+height:160px;
+background:#ffffff;
+border:2px solid #ddd;
+position:relative;
+margin:auto;
+cursor:pointer;
+overflow:hidden;
+}
+
+/* top flap */
+
+.flap{
+position:absolute;
+top:0;
+left:0;
+width:0;
+height:0;
+border-left:130px solid transparent;
+border-right:130px solid transparent;
+border-top:80px solid #f2f2f2;
+transform-origin:top;
+transition:0.6s;
+z-index:3;
+}
+
+/* envelope open */
+
+.envelope.open .flap{
+transform:rotateX(180deg);
+}
+
+/* letter */
+
+.letter{
+position:absolute;
+width:220px;
+background:white;
+padding:15px;
+left:20px;
+top:160px;   /* start hidden inside envelope */
+border:1px solid #ccc;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+transition:0.7s;
+z-index:2;
+}
+
+/* slide letter out */
+
+.envelope.open .letter{
+transform:translateY(-200px);
+}
+
+/* envelope bottom slides down */
+
+.envelope.open{
+transform:translateY(40px);
+transition:0.7s;
+}
+
+/* hearts */
+.heart{
+position:fixed;
+bottom:-10px;
+font-size:24px;
+animation:floatUp 5s linear infinite;
+}
+
+@keyframes floatUp{
+0%{
+transform:translateY(0);
+opacity:1;
+}
+100%{
+transform:translateY(-100vh);
+opacity:0;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- screen 1 -->
+
+<div id="welcome" class="screen" onclick="nextScreen()">
+<h1 id="typing"></h1>
+<p>Click anywhere to continue ❤️</p>
+</div>
+
+<!-- screen 2 PIN -->
+
+<div id="passcode" class="screen">
+
+<div class="pass-container">
+
+<div class="left">
+<img src="mom.jpg">
+</div>
+
+<div class="right">
+
+<h2>Enter PIN</h2>
+<div id="display" class="display">____</div>
+
+<div class="keypad">
+<button class="key" onclick="press(1)">1</button>
+<button class="key" onclick="press(2)">2</button>
+<button class="key" onclick="press(3)">3</button>
+<button class="key" onclick="press(4)">4</button>
+<button class="key" onclick="press(5)">5</button>
+<button class="key" onclick="press(6)">6</button>
+<button class="key" onclick="press(7)">7</button>
+<button class="key" onclick="press(8)">8</button>
+<button class="key" onclick="press(9)">9</button>
+<button class="key" onclick="clearPin()">C</button>
+<button class="key" onclick="press(0)">0</button>
+<button class="key" onclick="check()">✓</button>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- screen 3 gifts -->
+
+<div id="menu" class="screen">
+
+<h2>Choose a gift 🎁</h2>
+
+<div class="gifts">
+
+<div class="gift-box" onclick="letter()">
+<div class="lid"></div>
+<div class="ribbon-vertical"></div>
+<div class="ribbon-horizontal"></div>
+<span>💌</span>
+</div>
+
+<div class="gift-box" onclick="photos()">
+<div class="lid"></div>
+<div class="ribbon-vertical"></div>
+<div class="ribbon-horizontal"></div>
+<span>📸</span>
+</div>
+
+<div class="gift-box" onclick="surprise()">
+<div class="lid"></div>
+<div class="ribbon-vertical"></div>
+<div class="ribbon-horizontal"></div>
+<span>⭐</span>
+</div>
+
+</div>
+
+<div id="popup"></div>
+
+</div>
+
+<div id="giftScreen" class="screen" style="display:none;">
+<div id="giftContent"></div>
+<p style="margin-top:20px;"></p>
+</div>
+
+<script>
+
+let message = "🌸 Happy Mother's Day Mum ❤️ 🌸"
+let i = 0
+
+function typeText(){
+
+if(i < message.length){
+document.getElementById("typing").innerHTML += message.charAt(i)
+i++
+setTimeout(typeText,80)
+}
+
+}
+
+typeText()
+
+let secret="0208"
+let pin=""
+
+function nextScreen(){
+document.getElementById("welcome").style.display="none"
+document.getElementById("passcode").style.display="flex"
+}
+
+function press(n){
+if(pin.length<4){
+pin+=n
+update()
+}
+}
+
+function update(){
+display.innerText=pin.padEnd(4,"_")
+}
+
+function clearPin(){
+pin=""
+update()
+}
+
+function check(){
+if(pin===secret){
+document.getElementById("passcode").style.display="none"
+document.getElementById("menu").style.display="flex"
+}else{
+alert("Wrong PIN ❤️")
+clearPin()
+}
+}
+
+function openGift(content){
+document.getElementById("menu").style.display="none"
+document.getElementById("giftScreen").style.display="flex"
+document.getElementById("giftContent").innerHTML=content
+}
+
+function backToMenu(){
+document.getElementById("giftScreen").style.display="none"
+document.getElementById("menu").style.display="flex"
+}
+
+/* gifts */
+
+function letter(){
+
+openGift(`
+
+<h2>💌 A Letter</h2>
+
+<div class="envelope" onclick="event.stopPropagation(); openLetter(this)">
+
+<div class="flap"></div>
+
+</div>
+
+<div id="letterText" style="display:none; max-width:400px; background:white; padding:20px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.2);">
+
+<p>
+Happy Mother's Day ❤️<br><br>
+Thank you for everything you do for us.<br>
+We really appreaciate everything you do for us even though we dont show it.
+We might have our disagreements (very often) but we will always love you.
+You are mine,Mishuk and Hazel light in our darkest moments and the reason our home feels warm and happy.
+I hope you have the most amazaing day because you truly deserve it.
+Your the best mom we could ever wish for.
+We love you so much.
+</p>
+
+<button onclick="backToMenu()">Back</button>
+
+</div>
+
+`)
+
+}
+
+function openLetter(env){
+env.style.display="none"
+document.getElementById("letterText").style.display="block"
+}
+
+function photos(){
+openGift(`
+
+<h1>📸 Memories</h1>
+
+<img class='photo' src='photo1.jpg'>
+<img class='photo' src='photo2.jpg'>
+<img class='photo' src='photo3.jpg'>
+<img class='photo' src='photo4.jpg'>
+
+<br><br>
+
+<button onclick="backToMenu()">Back</button>
+
+`)
+}
+
+function surprise(){
+openGift(`
+
+<h1>⭐ Reasons I Love You</h1>
+
+<p>
+• You always support me<br>
+• You take care of everyone<br>
+• You make everything better<br>
+• You're the best mum ever ❤️<br>
+</p>
+
+<br>
+
+<button onclick="location.reload()">Play Again</button>
+
+`)
+}
+
+function createHeart(){
+
+const heart = document.createElement("div")
+heart.classList.add("heart")
+
+heart.innerHTML = "💗"
+
+heart.style.left = Math.random() * 100 + "vw"
+heart.style.fontSize = (20 + Math.random()*30) + "px"
+heart.style.animationDuration = (3 + Math.random() * 4) + "s"
+
+document.body.appendChild(heart)
+
+setTimeout(()=>{
+heart.remove()
+},7000)
+
+}
+
+setInterval(createHeart,500)
+
+</script>
+</body>
+</html>
